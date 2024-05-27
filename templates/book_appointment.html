@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment</title>
+    <!-- Optional: Add some CSS here to style your form -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h2>Book an Appointment</h2>
+    <form method="post" action="{% url 'book_appointment' %}">
+        {% csrf_token %}
+        <input type="text" name="patient_first_name" placeholder="Patient First Name" required>
+        <input type="text" name="patient_last_name" placeholder="Patient Last Name" required>
+        <input type="email" name="patient_email" placeholder="Patient Email" required>
+        <select name="doctor" required>
+            {% for doctor in doctors %}
+                <option value="{{ doctor.id }}">{{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})</option>
+            {% endfor %}
+        </select>
+        <input type="datetime-local" name="appointment_date" required>
+        <textarea name="comments" placeholder="Any comments"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
